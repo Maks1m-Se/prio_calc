@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css?family=Nunito+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Josefin+Sans:italic" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" integrity="sha512-wHTDs8ZapF3ldk9f6aRd7sCyZZF8+US+stJLXtWLz1EGPvbA8QyBkwokjHtoNgy0AD9n2X7bQITBkMKVdgk1Cw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+
+    <title>Priority Table</title>
+
+    <style>
+        body {
+            background-color: #f5f8fa;
+        background: linear-gradient(10deg, #36d1dc, #2950a4);
+        font-family: 'Nunito Sans', sans-serif;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        }
+
+        .container {
+        background-color: rgba(222, 221, 221, 0.238); /* Semi-transparent gray background */
+        padding: 20px;
+        border-radius: 10px;
+        }
+
+        h1 {
+            font-family: 'Nunito Sans', Georgia, Times, serif;
+            line-height: 100px;
+            color: #202050f7;
+            text-align: center;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            margin-left: 100px;
+            margin-right: 100px;
+            font-size: 40pt;
+            letter-spacing: 3px;
+        }
+
+        h2 {
+            font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
+            line-height: 25px;
+            font-style: italc;
+            color: #44454ef7;
+            text-align: center;
+            font-size: 7;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        input {
+            padding: 12px;
+            border: 2px solid #5cb85c;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        ::placeholder {
+            color: grey;
+        }
+
+        button {
+            background-color: #5cb85c;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        h7 {
+            font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
+            line-height: 25px;
+            color: #989797;
+            text-align: justify;
+            font-size: 10pt;
+            margin-top: 20px;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        h8 {
+            font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
+            line-height: 25px;
+            color: #37385af7;
+            font-weight: normal;
+            text-align: center;
+            font-size: 12pt;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        h9 {
+            font-family: 'Josefin Sans', Helvetica, Arial, sans-serif;
+            line-height: 25px;
+            color: #797998;
+            text-align: justify;
+            font-size: 10pt;
+            margin-top: 20px;
+            margin-left: 20px;
+            margin-right: 20px;
+        }
+
+        a {
+            color: #797998;
+            text-decoration: none;
+        }
+
+
+        .gif-container {
+            margin-top: 20px;
+            height: 200px; /* Set a fixed height for the container */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .gif-container img {
+            max-width: 100%; /* Ensure the image scales proportionally */
+            max-height: 100%; /* Ensure the image scales proportionally */
+        }
+
+
+        audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+
+        .info-text {
+            position: relative;
+            display: inline-block;
+        }
+
+        .info-text:hover::after {
+            content: "Glaub mir einfach.";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #fff;
+            padding: 5px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 12px;
+            color: #333;
+            z-index: 1;
+            width: 200px; /* Adjust the width as needed */
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        mark.blue {
+            color: rgba(69, 69, 107, 0.2);
+            font-weight:bold;
+            background: none;
+        }
+
+    </style>
+
+    
+</head>
+<body>
+    <div class="container">
+        <h2>Table</h2>
+        <table border="1">
+            <thead>
+                <tr>
+                    {% for column in dataframe.columns %}
+                    <th>{{ column }}</th>
+                    {% endfor %}
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in dataframe.iterrows() %}
+                <tr>
+                    {% for value in row %}
+                    <td>{{ value }}</td>
+                    {% endfor %}
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>
