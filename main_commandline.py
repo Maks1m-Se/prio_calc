@@ -9,7 +9,7 @@ RT: ultimate ranked table (result)
 import pandas as pd
 import itertools
 import inquirer
-import random
+#import random
 from tabulate import tabulate
 from tasks import df_tasks
 
