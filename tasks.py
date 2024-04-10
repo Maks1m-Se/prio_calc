@@ -4,7 +4,7 @@ DICT_TASKS = {
     "A": "Wäsche",
     "B": "Sport",
     "C": "Geschirr",
-    "D": "Wand streichen",
+    #"D": "Wand streichen",
 }
 
 # Create a list of tuples with (task_label, task_description)
