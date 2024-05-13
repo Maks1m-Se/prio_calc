@@ -11,10 +11,10 @@ def display_df(df, header=None):
     print(tabulate(df, "keys", tablefmt="github"))
     print('\n')
 
-# Function to evaluate tasks based on importance, urgency, and effort
-def eval_tasks(df):
+# Function to compare tasks based on importance, urgency, and effort (alternative to evaluate_tasks())
+def compare_tasks(df):
     '''
-    User evaluates tasks in pairs.
+    User compares tasks in pairs.
     Presents user each pair one by one. Each pair is evaluated for importance, urgency and efficiency.
     input: df (DataFrame of tasks) 
     output: IT_df, UT_df, ET_df with scores
@@ -56,6 +56,58 @@ def eval_tasks(df):
 
     return IT_df, UT_df, ET_df
 
+
+
+# Function to compare tasks based on importance, urgency, and effort (alternative to compare_tasks())
+def evaluate_tasks(df):
+    '''
+    User evaluates each tasks.
+    Presents user each task one by one. Each task is evaluated for importance, urgency and efficiencyfrom 0 to 10.
+    input: df (DataFrame of tasks) 
+    output: IT_df, UT_df, ET_df with scores
+    '''
+    # Counting the number of questions number_of_questions = number_of_combs * 3
+    number_of_questions = len(df.Tasks) * 3
+    count_question = 0
+    list_points = [x for x in range(0, 11)]
+
+    # Creating copies of DataFrame for Importance, Urgency, and Effort tables
+    IT_df, UT_df, ET_df = df.copy(), df.copy(), df.copy()
+    IT_df["Importance_Score"] = 0
+    UT_df["Urgency_Score"] = 0
+    ET_df["Effort_Score"] = 0
+
+    # Iterating through combinations of tasks
+    for task in df.Tasks:
+        
+
+        # Importance
+        count_question += 1
+        print(task)
+        choice = inquirer.list_input(f"({count_question}/{number_of_questions}) Evaluate the IMPORTANCE from 0 - 10.", choices=list_points)
+        print(f"{task} IMPORTANCE: {choice}")
+        IT_df.loc[df['Tasks'] == task, 'Importance_Score'] += choice
+        display_df(IT_df, "IT_df")
+
+        # Urgency
+        count_question += 1
+        print(task)
+        choice = inquirer.list_input(f"({count_question}/{number_of_questions}) Evaluate the URGENCY from 0 - 10.", choices=list_points)
+        print(f"{task} URGENCY: {choice}")
+        UT_df.loc[df['Tasks'] == task, 'Urgency_Score'] += choice
+        display_df(UT_df, "UT_df")
+
+        # Effort
+        count_question += 1
+        print(task)
+        choice = inquirer.list_input(f"({count_question}/{number_of_questions}) Evaluate the EFFORT from 0 - 10.", choices=list_points)
+        print(f"{task} EFFORT: {choice}")
+        ET_df.loc[df['Tasks'] == task, 'Effort_Score'] -= choice
+        display_df(ET_df, "ET_df")
+
+    return IT_df, UT_df, ET_df
+
+
 def render_task_rank(df_tasks, IT_df, UT_df, ET_df):
     '''
     Calculating the ranks.
@@ -88,7 +140,14 @@ def main():
     display_df(df_tasks, "df_tasks")
     print("Count: ", df_tasks["Tasks"].nunique())
     
-    IT_df, UT_df, ET_df = eval_tasks(df_tasks)
+    ### only one function possible ###
+    #compare tasks
+    #IT_df, UT_df, ET_df = compare_tasks(df_tasks)
+
+    #evaluate each task
+    IT_df, UT_df, ET_df = evaluate_tasks(df_tasks)
+    ###  ###
+
     render_task_rank(df_tasks, IT_df, UT_df, ET_df)
 
 if __name__ == "__main__":

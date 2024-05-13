@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="de">
+
+
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task Evaluation Results</title>
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_evaluate.css')}}">
+
+
+</head>
+<body>
+    <div class="container" >
+        <h2>Task Evaluation Results</h2>
+
+        <form action="/">
+            <button type="submit">
+                <i class="fas fa-caret-left" style="padding-right: 5px;"></i>
+                Back
+            </button>
+        </form>
+
+        <br>
+        
+        <div class="center">
+            <h4>Weiterbildung Machine Learning & Acceleration</h4>
+        </div>
+        
+
+
+        <!-- Buttons Rating 0-10 START -->  
+        <h3>Rate Importance</h3>
+        <div class="btn-group">
+            <form action=/update_scores method="POST"><button>0</button></form>
+            <form action=/update_scores method="POST"><button>1</button></form>
+            <form action=/update_scores method="POST"><button>2</button></form>
+            <form action=/update_scores method="POST"><button>3</button></form>
+            <form action=/update_scores method="POST"><button>4</button></form>
+            <form action=/update_scores method="POST"><button>5</button></form>
+            <form action=/update_scores method="POST"><button>6</button></form>
+            <form action=/update_scores method="POST"><button>7</button></form>
+            <form action=/update_scores method="POST"><button>8</button></form>
+            <form action=/update_scores method="POST"><button>9</button></form>
+            <form action=/update_scores method="POST"><button>10</button></form>
+        </div>
+        <h3>Rate Urgency</h3>
+        <div class="btn-group">
+            <form action=/update_scores method="POST"><button>0</button></form>
+            <form action=/update_scores method="POST"><button>1</button></form>
+            <form action=/update_scores method="POST"><button>2</button></form>
+            <form action=/update_scores method="POST"><button>3</button></form>
+            <form action=/update_scores method="POST"><button>4</button></form>
+            <form action=/update_scores method="POST"><button>5</button></form>
+            <form action=/update_scores method="POST"><button>6</button></form>
+            <form action=/update_scores method="POST"><button>7</button></form>
+            <form action=/update_scores method="POST"><button>8</button></form>
+            <form action=/update_scores method="POST"><button>9</button></form>
+            <form action=/update_scores method="POST"><button>10</button></form>
+        </div>
+        <h3>Rate Effort</h3>
+        <div class="btn-group">
+            <form action=/update_scores method="POST"><button>0</button></form>
+            <form action=/update_scores method="POST"><button>1</button></form>
+            <form action=/update_scores method="POST"><button>2</button></form>
+            <form action=/update_scores method="POST"><button>3</button></form>
+            <form action=/update_scores method="POST"><button>4</button></form>
+            <form action=/update_scores method="POST"><button>5</button></form>
+            <form action=/update_scores method="POST"><button>6</button></form>
+            <form action=/update_scores method="POST"><button>7</button></form>
+            <form action=/update_scores method="POST"><button>8</button></form>
+            <form action=/update_scores method="POST"><button>9</button></form>
+            <form action=/update_scores method="POST"><button>10</button></form>
+        </div>
+
+        <!-- Buttons Rating 0-10 END -->
+
+        <br><br>
+
+        <!-- tables START    --> 
+        
+        <!--
+        <h3>Importance</h3>
+        <table border="2">
+            <thead>
+                <tr>
+                 <th>Tasks</th>
+                    <th>Importance Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in IT_df.iterrows() %}
+                    <tr>
+                        <td>{{ index }}</td>
+                        <td>{{ row['Importance_Score'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        
+        <h3>Urgency</h3>
+        <table border="2">
+            <thead>
+                <tr>
+                    <th>Tasks</th>
+                    <th>Urgency Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in UT_df.iterrows() %}
+                    <tr>
+                        <td>{{ index }}</td>
+                        <td>{{ row['Urgency_Score'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <h3>Effort</h3>
+        <table border="2">
+            <thead>
+                <tr>
+                    <th>Tasks</th>
+                    <th>Effort Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for index, row in ET_df.iterrows() %}
+                    <tr>
+                        <td>{{ index }}</td>
+                        <td>{{ row['Effort_Score'] }}</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        -->
+
+
+        <!-- tables END    --> 
+
+
+    </div>
+</body>
+</html>

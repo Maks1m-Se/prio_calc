@@ -1,10 +1,10 @@
 import pandas as pd
 
 DICT_TASKS = {
-    "A": "Aufräumen Boxen",
-    "B": "Putzen",
-    "C": "Wäsche",
-   # "D": "Sport",
+    "A": "Geschirr",
+    "B": "Wäsche",
+    "C": "Steuern",
+    "D": "App",
 }
 
 # Create a list of tuples with (task_label, task_description)
