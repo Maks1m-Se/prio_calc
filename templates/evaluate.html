@@ -35,17 +35,18 @@
         <!-- Buttons Rating 0-10 START -->  
         <h3>Rate Importance</h3>
         <div class="btn-group">
-            <form action=/update_scores method="POST"><button>0</button></form>
-            <form action=/update_scores method="POST"><button>1</button></form>
-            <form action=/update_scores method="POST"><button>2</button></form>
-            <form action=/update_scores method="POST"><button>3</button></form>
-            <form action=/update_scores method="POST"><button>4</button></form>
-            <form action=/update_scores method="POST"><button>5</button></form>
-            <form action=/update_scores method="POST"><button>6</button></form>
-            <form action=/update_scores method="POST"><button>7</button></form>
-            <form action=/update_scores method="POST"><button>8</button></form>
-            <form action=/update_scores method="POST"><button>9</button></form>
-            <form action=/update_scores method="POST"><button>10</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="0">0</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="1">1</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="2">2</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="3">3</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="4">4</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="5">5</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="6">6</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="7">7</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="8">8</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="9">9</button></form>
+            <form action=/update_scores method="POST"><button type="submit" name="IT_value" value="10">10</button></form>
+
         </div>
         <h3>Rate Urgency</h3>
         <div class="btn-group">
@@ -82,6 +83,19 @@
 
         <!-- tables START    --> 
         
+        <table>
+            <tbody>
+                {%for IT in IT_list%}
+                <tr>
+                    <td>{{IT.task_id}}</td>
+                    <td>{{IT.name}}</td>
+                    <td>{{IT.Importance_Score}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+
+
         <!--
         <h3>Importance</h3>
         <table border="2">

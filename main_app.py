@@ -9,6 +9,8 @@ from datetime import datetime
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///prio_calc.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Instantiate data base object
 db = SQLAlchemy(app)
 
 
@@ -19,6 +21,8 @@ class Todo(db.Model):
     name=db.Column(db.String(200), nullable=False, unique=True)
     done=db.Column(db.Boolean)
     datetime_added = db.Column(db.DateTime, default=datetime.now())
+    def __repr__(self):
+        return f'<{self.task_id} {self.name} {self.done} {self.datetime_added}>'
     
 
 
@@ -27,6 +31,8 @@ class IT_db(db.Model):
     task_id=db.Column(db.Integer, primary_key=True)
     name=db.Column(db.String(200), nullable=False)
     Importance_Score=db.Column(db.Integer)
+    def __repr__(self):
+        return f'<{self.task_id} {self.name} {self.Importance_Score}>'
 
 
 # Urgency Table
@@ -38,11 +44,6 @@ class IT_db(db.Model):
 #Variables to pass to subdomains
 attribute = "Importance"
 
-#Initilize empty dataframes
-IT_df = pd.DataFrame()
-UT_df = pd.DataFrame()
-ET_df = pd.DataFrame()
-
 
 
 #### ROUTES ####
@@ -51,54 +52,68 @@ ET_df = pd.DataFrame()
 @app.route('/')
 def index():
     todo_list = Todo.query.all()
-    return render_template('index_WEBAPP.html', title='Main Page', dataframe=df_tasks, todo_list=todo_list)
+    return render_template('index_WEBAPP.html', title='Main Page',
+                           dataframe=df_tasks, todo_list=todo_list)
 
 # Return to Main Page
 @app.route('/return_to_index', methods=['POST'])
 def return_to_index():
-    return render_template('index_WEB+APP.html', title='Main Page')
+    return render_template('index_WEBAPP.html', title='Main Page')
 
 # Add Task
 @app.route('/add_task', methods=['POST'])
 def add_task():
     name = request.form.get("name")
-    new_task = Todo(name=name, done=False)
-    db.session.add(new_task)
+    add_task_Todo = Todo(name=name, done=False)
+    add_task_IT = IT_db(name=name, Importance_Score=0)
+    db.session.add(add_task_Todo)
+    db.session.add(add_task_IT)
     db.session.commit()
     return redirect(url_for("index"))
 
-# Update Tasks
+# Update DONE Tasks
 @app.route('/update_task/<int:todo_id>')
 def update_task(todo_id):
-    todo = Todo.query.get(todo_id)
-    todo.done = not todo.done
+    update_task_Todo = Todo.query.get(todo_id)
+    update_task_Todo.done = not update_task_Todo.done
     db.session.commit()
     return redirect(url_for("index"))
 
 # Delete Tasks
 @app.route('/delete_task/<int:todo_id>')
 def delete_task(todo_id):
-    todo = Todo.query.get(todo_id)
-    db.session.delete(todo)
+    del_task_Todo = Todo.query.get(todo_id)
+    del_task_IT = IT_db.query.get(todo_id)
+    db.session.delete(del_task_Todo)
+    db.session.delete(del_task_IT)
     db.session.commit()
     return redirect(url_for("index"))
 
 
 # Evalute Tasks
-@app.route('/evaluate_tasks', methods=['POST'])
+@app.route('/evaluate_tasks', methods=['GET', 'POST'])
 def evaluate_tasks_route():
     IT_df, UT_df, ET_df = evaluate_tasks(df_tasks)
+    IT_list = IT_db.query.all()
     return render_template('evaluate.html', title='Evaluate Page',
                            IT_df=IT_df, UT_df=UT_df, ET_df=ET_df,
+                           IT_list=IT_list,
                            attribute=attribute)
 
 # Update Scores
 @app.route('/update_scores', methods=['GET', 'POST'])
 def update_scores():
-    if request.method == "POST":
-        IT_df.loc[IT_df['Tasks'] == 0, 'Importance_Score'] += 1
-        IT_df, UT_df, ET_df = evaluate_tasks(df_tasks)
-    return redirect(url_for("evaluate.html"))    
+    IT_value = request.form.get("IT_value")
+    if IT_value is None:
+        IT_value = 0
+    else:
+        IT_value = int(IT_value)  # Convert to integer
+    task = IT_db.query.filter_by(name="Task A").first()
+    if task.Importance_Score is None:
+        task.Importance_Score = 0  # Ensure Importance_Score is not None
+    task.Importance_Score += IT_value
+    db.session.commit()
+    return redirect(url_for("evaluate_tasks_route"))    
 
 #### END ROUTES ####
 
