@@ -25,8 +25,6 @@ class Todo(db.Model):
     def __repr__(self):
         return f'<{self.task_id} {self.name} {self.done} {self.datetime_added}>'
     
-
-
 # Importance Table
 class IT_db(db.Model):
     task_id=db.Column(db.Integer, primary_key=True)
@@ -36,18 +34,46 @@ class IT_db(db.Model):
     def __repr__(self):
         return f'<{self.task_id} {self.name} {self.Importance_Score}>'
 
-
 # Urgency Table
+class UT_db(db.Model):
+    task_id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(200), nullable=False)
+    Urgency_Score=db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'<{self.task_id} {self.name} {self.Urgency_Score}>'
 
 # Effort Table
+class ET_db(db.Model):
+    task_id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(200), nullable=False)
+    Effort_Score=db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'<{self.task_id} {self.name} {self.Effort_Score}>'
 
 # Results Table
+class RT_db(db.Model):
+    task_id=db.Column(db.Integer, primary_key=True)
+    name=db.Column(db.String(200), nullable=False)
+    Results_Score=db.Column(db.Integer)
+
+    def __repr__(self):
+        return f'<{self.task_id} {self.name} {self.Results_Score}>'
+
+#### END Database Models ####
+
 
 ### Global Vars and Funcs ###
 attribute = "Importance"
 tasks_list = []
 first_task = ''
 pop_task = False
+IT_is_rated = False
+UT_is_rated = False
+ET_is_rated = False
+### END Global Vars and Funcs ###
+
 
 #### Helper Functions ####
 def get_tasks_list():
@@ -59,10 +85,17 @@ def get_tasks_list():
 # Main Page
 @app.route('/')
 def index():
-    global tasks_list, pop_task
-    print('INDEX') # Debugging
+    global tasks_list, pop_task, IT_is_rated, UT_is_rated, ET_is_rated
+    print('INDEX PAGE') # Debugging
 
     todo_list = Todo.query.all()
+
+    IT_is_rated = False
+    UT_is_rated = False
+    ET_is_rated = False
+    print("IT_is_rated: ", IT_is_rated) # Debugging
+    print("UT_is_rated: ", UT_is_rated) # Debugging
+    print("ET_is_rated: ", ET_is_rated) # Debugging
 
     pop_task = True
     print('Pop on: ', pop_task) # Debugging
@@ -139,30 +172,43 @@ def update_scores():
     global tasks_list, first_task, pop_task
     print('UPDATE') # Debugging
 
+    # Retrieve IT vars from evaluation page
+    IT_is_rated = bool(request.form.get("IT_is_rated")) # retreive and convert to bool
     IT_value = request.form.get("IT_value")
     IT_value = int(IT_value) if IT_value is not None else 0  # Convert to integer
     
+    print("IT_is_rated: ", IT_is_rated) # Debugging
+    print("UT_is_rated: ", UT_is_rated) # Debugging
+    print("ET_is_rated: ", ET_is_rated) # Debugging
+
     task = IT_db.query.filter_by(name=first_task).first()
     if task.Importance_Score is None:
         task.Importance_Score = 0  # Ensure Importance_Score is not None
     task.Importance_Score += IT_value
     db.session.commit()
 
-    pop_task = True
-    print('Pop on: ', pop_task) # Debugging
 
-    # pop first task
-    if tasks_list:
-        removed_task = tasks_list.pop(0)
-        print('Pop: ', removed_task) # Debugging
 
-    # get new first task
-    if not tasks_list:
-        pass # or first_task = "--- (no tasks left)"
-    else: 
-        first_task = tasks_list[0]
-    print('Task List:\n', tasks_list) # Debugging
+    ### Logik wenn IT, UT u. ET gerated ###
+
+    if IT_is_rated and UT_is_rated and ET_is_rated:
+        pop_task = True
+        print('Pop on: ', pop_task) # Debugging
+
+        # pop first task
+        if tasks_list:
+            removed_task = tasks_list.pop(0)
+            print('Pop: ', removed_task) # Debugging
+
+        # get new first task
+        if not tasks_list:
+            pass # or first_task = "--- (no tasks left)"
+        else: 
+            first_task = tasks_list[0]
+        print('Task List:\n', tasks_list) # Debugging
     
+    ### END Logik wenn IT, UT u. ET gerated ###
+
 
     return redirect(url_for("evaluate_tasks_route"))    
 
