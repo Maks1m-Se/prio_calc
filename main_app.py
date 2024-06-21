@@ -6,6 +6,11 @@ import os
 from tasks import df_tasks
 from WEBAPP_funcs import evaluate_tasks, compare_tasks, render_task_rank
 
+#print('Test ############')
+
+# Set the working directory to the directory of the script
+os.chdir(os.path.dirname(os.path.abspath(__file__)))
+
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///prio_calc.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -86,7 +91,7 @@ def get_tasks_list():
 @app.route('/')
 def index():
     global tasks_list, pop_task, IT_is_rated, UT_is_rated, ET_is_rated
-    print('INDEX PAGE') # Debugging
+    print('\nINDEX PAGE') # Debugging
 
     todo_list = Todo.query.all()
 
@@ -118,8 +123,14 @@ def add_task():
     name = request.form.get("name")
     add_task_Todo = Todo(name=name, done=False)
     add_task_IT = IT_db(name=name, Importance_Score=0)
+    add_task_UT = UT_db(name=name, Urgency_Score=0)
+    add_task_ET = ET_db(name=name, Effort_Score=0)
+    add_task_RT = RT_db(name=name, Results_Score=0)
     db.session.add(add_task_Todo)
     db.session.add(add_task_IT)
+    db.session.add(add_task_UT)
+    db.session.add(add_task_ET)
+    db.session.add(add_task_RT)
     db.session.commit()
     return redirect(url_for("index"))
 
@@ -136,8 +147,12 @@ def update_task(todo_id):
 def delete_task(todo_id):
     del_task_Todo = Todo.query.get(todo_id)
     del_task_IT = IT_db.query.get(todo_id)
+    del_task_UT = UT_db.query.get(todo_id)
+    del_task_ET = ET_db.query.get(todo_id)
     db.session.delete(del_task_Todo)
     db.session.delete(del_task_IT)
+    db.session.delete(del_task_UT)
+    db.session.delete(del_task_ET)
     db.session.commit()
     return redirect(url_for("index"))
 
@@ -145,8 +160,11 @@ def delete_task(todo_id):
 # Evalute Tasks
 @app.route('/evaluate_tasks', methods=['GET', 'POST'])
 def evaluate_tasks_route():
-    global tasks_list, first_task
-    print('EVALUATE') # Debugging
+    global tasks_list, first_task, IT_is_rated, UT_is_rated, ET_is_rated
+    print('\nEVALUATE PAGE') # Debugging
+    print("IT_is_rated: ", IT_is_rated) # Debugging
+    print("UT_is_rated: ", UT_is_rated) # Debugging
+    print("ET_is_rated: ", ET_is_rated) # Debugging
     print('Pop on: ', pop_task) # Debugging
 
     if not pop_task:
@@ -160,37 +178,66 @@ def evaluate_tasks_route():
 
     IT_df, UT_df, ET_df = evaluate_tasks(df_tasks)
     IT_list = IT_db.query.all()
+    UT_list = UT_db.query.all()
+    ET_list = ET_db.query.all()
 
     return render_template('evaluate.html', title='Evaluate Page',
                            IT_df=IT_df, UT_df=UT_df, ET_df=ET_df,
-                           IT_list=IT_list, first_task=first_task,
-                           attribute=attribute)
+                           IT_list=IT_list, UT_list=UT_list, ET_list= ET_list,
+                           first_task=first_task, attribute=attribute,
+                           IT_is_rated=IT_is_rated, UT_is_rated=UT_is_rated, ET_is_rated=ET_is_rated)
 
 # Update Scores
 @app.route('/update_scores', methods=['GET', 'POST'])
 def update_scores():
-    global tasks_list, first_task, pop_task
-    print('UPDATE') # Debugging
+    global tasks_list, first_task, pop_task, IT_is_rated, UT_is_rated, ET_is_rated
+    print('\nUPDATE SCORES') # Debugging
 
-    # Retrieve IT vars from evaluation page
-    IT_is_rated = bool(request.form.get("IT_is_rated")) # retreive and convert to bool
+    rated = request.form.get("rated")
+
+    if rated == "Importance":
+        # Retrieve IT vars from evaluation page
+        IT_is_rated = bool(request.form.get("IT_is_rated")) # retreive and convert to bool
     IT_value = request.form.get("IT_value")
     IT_value = int(IT_value) if IT_value is not None else 0  # Convert to integer
-    
     print("IT_is_rated: ", IT_is_rated) # Debugging
+
+    if rated == "Urgency":
+        # Retrieve UT vars from evaluation page
+        UT_is_rated = bool(request.form.get("UT_is_rated")) # retreive and convert to bool
+    UT_value = request.form.get("UT_value")
+    UT_value = int(UT_value) if UT_value is not None else 0  # Convert to integer
     print("UT_is_rated: ", UT_is_rated) # Debugging
+
+    if rated == "Effort":
+        # Retrieve ET vars from evaluation page
+        ET_is_rated = bool(request.form.get("ET_is_rated")) # retreive and convert to bool
+    ET_value = request.form.get("ET_value")
+    ET_value = int(ET_value) if ET_value is not None else 0  # Convert to integer
     print("ET_is_rated: ", ET_is_rated) # Debugging
 
-    task = IT_db.query.filter_by(name=first_task).first()
-    if task.Importance_Score is None:
-        task.Importance_Score = 0  # Ensure Importance_Score is not None
-    task.Importance_Score += IT_value
+
+    print("IT_value: ", IT_value) # Debugging
+    print("UT_value: ", UT_value) # Debugging
+    print("ET_value: ", ET_value) # Debugging
+
+    IT_task = IT_db.query.filter_by(name=first_task).first()
+    UT_task = UT_db.query.filter_by(name=first_task).first()
+    ET_task = ET_db.query.filter_by(name=first_task).first()
+    if IT_task.Importance_Score is None:
+        IT_task.Importance_Score = 0  # Ensure Importance_Score is not None
+    IT_task.Importance_Score += IT_value
+    if UT_task.Urgency_Score is None:
+        UT_task.Urgency_Score = 0  # Ensure Urgency_Score is not None
+    UT_task.Urgency_Score += UT_value
+    if ET_task.Effort_Score is None:
+        ET_task.Effort_Score = 0  # Ensure Effort_Score is not None
+    ET_task.Effort_Score -= ET_value
     db.session.commit()
 
 
 
     ### Logik wenn IT, UT u. ET gerated ###
-
     if IT_is_rated and UT_is_rated and ET_is_rated:
         pop_task = True
         print('Pop on: ', pop_task) # Debugging
@@ -206,7 +253,8 @@ def update_scores():
         else: 
             first_task = tasks_list[0]
         print('Task List:\n', tasks_list) # Debugging
-    
+    else:
+        print('Pop on: ', pop_task)
     ### END Logik wenn IT, UT u. ET gerated ###
 
 

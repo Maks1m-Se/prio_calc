@@ -37,10 +37,12 @@
         <div class="btn-group">
             <form action=/update_scores method="POST">
                 <input type="hidden" name="IT_is_rated" value=1></input>
+                <input type="hidden" name="rated" value="Importance"></input>
                 <button type="submit" name="IT_value" value="0">0</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="IT_is_rated" value=1></input>
+                <input type="hidden" name="rated" value="Importance"></input>
                 <button type="submit" name="IT_value" value="1">1</button>
             </form>
             <form action=/update_scores method="POST">
@@ -85,10 +87,12 @@
         <div class="btn-group">
             <form action=/update_scores method="POST">
                 <input type="hidden" name="UT_is_rated" value=1></input>
+                <input type="hidden" name="rated" value="Urgency"></input>
                 <button type="submit" name="UT_value" value="0">0</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="UT_is_rated" value=1></input>
+                <input type="hidden" name="rated" value="Urgency"></input>
                 <button type="submit" name="UT_value" value="1">1</button>
             </form>
             <form action=/update_scores method="POST">
@@ -132,47 +136,49 @@
         <div class="btn-group">
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="0">0</button>
+                <input type="hidden" name="rated" value="Effort"></input>
+                <button type="submit" name="ET_value" value="0">0</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="1">1</button>
+                <input type="hidden" name="rated" value="Effort"></input>
+                <button type="submit" name="ET_value" value="1">1</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="2">2</button>
+                <button type="submit" name="ET_value" value="2">2</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="3">3</button>
+                <button type="submit" name="ET_value" value="3">3</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="4">4</button>
+                <button type="submit" name="ET_value" value="4">4</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="5">5</button>
+                <button type="submit" name="ET_value" value="5">5</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="6">6</button>
+                <button type="submit" name="ET_value" value="6">6</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="7">7</button>
+                <button type="submit" name="ET_value" value="7">7</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="8">8</button>
+                <button type="submit" name="ET_value" value="8">8</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="9">9</button>
+                <button type="submit" name="ET_value" value="9">9</button>
             </form>
             <form action=/update_scores method="POST">
                 <input type="hidden" name="ET_is_rated" value=1></input>
-                <button type="submit" name="ET_value" vaule="10">10</button>
+                <button type="submit" name="ET_value" value="10">10</button>
             </form>
         </div>
 
@@ -181,7 +187,7 @@
         <br><br>
 
         <!-- tables START    --> 
-        
+        <h3>Importance Table</h3>
         <table>
             <tbody>
                 {%for IT in IT_list%}
@@ -189,6 +195,30 @@
                     <td>{{IT.task_id}}</td>
                     <td>{{IT.name}}</td>
                     <td>{{IT.Importance_Score}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <h3>Urgency Table</h3>
+        <table>
+            <tbody>
+                {%for UT in UT_list%}
+                <tr>
+                    <td>{{UT.task_id}}</td>
+                    <td>{{UT.name}}</td>
+                    <td>{{UT.Urgency_Score}}</td>
+                </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+        <h3>Effort Table</h3>
+        <table>
+            <tbody>
+                {%for ET in ET_list%}
+                <tr>
+                    <td>{{ET.task_id}}</td>
+                    <td>{{ET.name}}</td>
+                    <td>{{ET.Effort_Score}}</td>
                 </tr>
                 {%endfor%}
             </tbody>
