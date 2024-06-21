@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sorted Results</title>
+</head>
+<body>
+    <h2>Sorted Results by Score</h2>
+    <table border="1">
+        <tr>
+            <th>Task ID</th>
+            <th>Task Name</th>
+            <th>Results Score</th>
+        </tr>
+        {% for result in sorted_results %}
+        <tr>
+            <td>{{ result.task_id }}</td>
+            <td>{{ result.name }}</td>
+            <td>{{ result.Results_Score }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</body>
+</html>

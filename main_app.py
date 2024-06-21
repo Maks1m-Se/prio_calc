@@ -3,8 +3,11 @@ from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 import pandas as pd
 import os
+import logging
 from tasks import df_tasks
 from WEBAPP_funcs import evaluate_tasks, compare_tasks, render_task_rank
+
+logging.basicConfig(level=logging.DEBUG)
 
 #print('Test ############')
 
@@ -149,10 +152,12 @@ def delete_task(todo_id):
     del_task_IT = IT_db.query.get(todo_id)
     del_task_UT = UT_db.query.get(todo_id)
     del_task_ET = ET_db.query.get(todo_id)
+    del_task_RT = RT_db.query.get(todo_id)
     db.session.delete(del_task_Todo)
     db.session.delete(del_task_IT)
     db.session.delete(del_task_UT)
     db.session.delete(del_task_ET)
+    db.session.delete(del_task_RT)
     db.session.commit()
     return redirect(url_for("index"))
 
@@ -165,7 +170,7 @@ def evaluate_tasks_route():
     print("IT_is_rated: ", IT_is_rated) # Debugging
     print("UT_is_rated: ", UT_is_rated) # Debugging
     print("ET_is_rated: ", ET_is_rated) # Debugging
-    print('Pop on: ', pop_task) # Debugging
+    print('Pop task on: ', pop_task) # Debugging
 
     if not pop_task:
         tasks_list = get_tasks_list()
@@ -177,13 +182,14 @@ def evaluate_tasks_route():
         first_task = tasks_list[0]
 
     IT_df, UT_df, ET_df = evaluate_tasks(df_tasks)
+    RT_list = RT_db.query.all()
     IT_list = IT_db.query.all()
     UT_list = UT_db.query.all()
     ET_list = ET_db.query.all()
 
     return render_template('evaluate.html', title='Evaluate Page',
                            IT_df=IT_df, UT_df=UT_df, ET_df=ET_df,
-                           IT_list=IT_list, UT_list=UT_list, ET_list= ET_list,
+                           RT_list=RT_list, IT_list=IT_list, UT_list=UT_list, ET_list=ET_list,
                            first_task=first_task, attribute=attribute,
                            IT_is_rated=IT_is_rated, UT_is_rated=UT_is_rated, ET_is_rated=ET_is_rated)
 
@@ -221,18 +227,26 @@ def update_scores():
     print("UT_value: ", UT_value) # Debugging
     print("ET_value: ", ET_value) # Debugging
 
+    RT_task = RT_db.query.filter_by(name=first_task).first()
     IT_task = IT_db.query.filter_by(name=first_task).first()
     UT_task = UT_db.query.filter_by(name=first_task).first()
     ET_task = ET_db.query.filter_by(name=first_task).first()
+
+    if RT_task.Results_Score is None:
+        RT_task.Results_Score = 0 # Ensure Results_Score is not None
+
     if IT_task.Importance_Score is None:
         IT_task.Importance_Score = 0  # Ensure Importance_Score is not None
     IT_task.Importance_Score += IT_value
+    RT_task.Results_Score += IT_value
     if UT_task.Urgency_Score is None:
         UT_task.Urgency_Score = 0  # Ensure Urgency_Score is not None
     UT_task.Urgency_Score += UT_value
+    RT_task.Results_Score += UT_value
     if ET_task.Effort_Score is None:
         ET_task.Effort_Score = 0  # Ensure Effort_Score is not None
     ET_task.Effort_Score -= ET_value
+    RT_task.Results_Score -= ET_value
     db.session.commit()
 
 
@@ -240,21 +254,34 @@ def update_scores():
     ### Logik wenn IT, UT u. ET gerated ###
     if IT_is_rated and UT_is_rated and ET_is_rated:
         pop_task = True
-        print('Pop on: ', pop_task) # Debugging
+        print('Pop task on: ', pop_task) # Debugging
 
         # pop first task
         if tasks_list:
             removed_task = tasks_list.pop(0)
-            print('Pop: ', removed_task) # Debugging
+            print('Popped task: ', removed_task) # Debugging
 
         # get new first task
-        if not tasks_list:
-            pass # or first_task = "--- (no tasks left)"
+        if not tasks_list: # if empty list
+            print("To Do List empty") # Debugging
+            print("Show results") # Debugging
+            ### If EMPTY SHOW RESULT ######
+            # Sort RT_db table by Results_Score in descending order
+            sorted_results = RT_db.query.order_by(RT_db.Results_Score.desc()).all()
+            return render_template('results.html', sorted_results=sorted_results)
         else: 
             first_task = tasks_list[0]
+
+        # reset is_rated variables
+        print("Reset is_rated variables") # Debugging
+        IT_is_rated, UT_is_rated, ET_is_rated = False, False, False
+        print("IT_is_rated: ", IT_is_rated) # Debugging
+        print("UT_is_rated: ", UT_is_rated) # Debugging
+        print("ET_is_rated: ", ET_is_rated) # Debugging
+
         print('Task List:\n', tasks_list) # Debugging
     else:
-        print('Pop on: ', pop_task)
+        print('Pop task on: ', pop_task)
     ### END Logik wenn IT, UT u. ET gerated ###
 
 

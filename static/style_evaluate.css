@@ -30,7 +30,15 @@ body {
   border-radius: 15px;
 }
 
+.table-row {
+  display: flex;
+  justify-content: space-between;
+}
 
+.table-column {
+  flex: 1;
+  margin: 10px;
+}
 
 .btn-group button {
     background-color: #036873; /* Green background */
