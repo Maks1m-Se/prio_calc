@@ -110,6 +110,19 @@ def index():
 
     tasks_list = get_tasks_list()
     print('Task List:\n', tasks_list) # Debugging
+
+    # Set all task scores to 0
+    print('Set all task scores to 0\n') # Debugging
+    for task in tasks_list:
+        RT_task = RT_db.query.filter_by(name=task).first()
+        RT_task.Results_Score = 0 
+        IT_task = IT_db.query.filter_by(name=task).first()
+        IT_task.Importance_Score = 0 
+        UT_task = UT_db.query.filter_by(name=task).first()
+        UT_task.Urgency_Score = 0 
+        ET_task = ET_db.query.filter_by(name=task).first()
+        ET_task.Effort_Score = 0
+    db.session.commit()
     
     return render_template('index_WEBAPP.html', title='Main Page',
                            dataframe=df_tasks, todo_list=todo_list)
@@ -268,7 +281,13 @@ def update_scores():
             ### If EMPTY SHOW RESULT ######
             # Sort RT_db table by Results_Score in descending order
             sorted_results = RT_db.query.order_by(RT_db.Results_Score.desc()).all()
-            return render_template('results.html', sorted_results=sorted_results)
+            RT_list = RT_db.query.all()
+            IT_list = IT_db.query.all()
+            UT_list = UT_db.query.all()
+            ET_list = ET_db.query.all()
+
+            return render_template('results.html', sorted_results=sorted_results,
+                                   RT_list=RT_list, IT_list=IT_list, UT_list=UT_list, ET_list=ET_list)
         else: 
             first_task = tasks_list[0]
 

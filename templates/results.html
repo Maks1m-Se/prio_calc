@@ -42,6 +42,56 @@
             </tbody>
         </table>
 
+
+
+        
+        <br>
+
+        <div class="table-row">
+            <div class="table-column">
+                <h3>Importance Table</h3>
+                <table>
+                    <tbody>
+                        {%for IT in IT_list%}
+                        <tr>
+                            <td>{{IT.task_id}}</td>
+                            <td>{{IT.name}}</td>
+                            <td>{{IT.Importance_Score}}</td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-column">
+                <h3>Urgency Table</h3>
+                <table>
+                    <tbody>
+                        {%for UT in UT_list%}
+                        <tr>
+                            <td>{{UT.task_id}}</td>
+                            <td>{{UT.name}}</td>
+                            <td>{{UT.Urgency_Score}}</td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-column">
+                <h3>Effort Table</h3>
+                <table>
+                    <tbody>
+                        {%for ET in ET_list%}
+                        <tr>
+                            <td>{{ET.task_id}}</td>
+                            <td>{{ET.name}}</td>
+                            <td>{{ET.Effort_Score}}</td>
+                        </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
         <!-- Tables END -->
     </div>
 </body>
