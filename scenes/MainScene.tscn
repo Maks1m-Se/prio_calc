@@ -1,0 +1,160 @@
+[gd_scene load_steps=13 format=3 uid="uid://8rlxygccxnf8"]
+
+[ext_resource type="Script" path="res://scripts/MainScene.gd" id="1_mv1ex"]
+[ext_resource type="Theme" uid="uid://cwmo37dmrdcej" path="res://prio_calc_btn_EVAL_theme.tres" id="2_o80d3"]
+
+[sub_resource type="Gradient" id="Gradient_com57"]
+offsets = PackedFloat32Array(0, 0.51465, 1)
+colors = PackedColorArray(0.00401211, 0.105149, 0.250394, 1, 0.00784314, 0.156863, 0.34902, 1, 0.0143015, 0.216465, 0.462609, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jq66f"]
+gradient = SubResource("Gradient_com57")
+fill_from = Vector2(0.655271, 0.917379)
+fill_to = Vector2(0.19943, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_g17bd"]
+texture = SubResource("GradientTexture2D_jq66f")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svv0u"]
+content_margin_left = 5.0
+content_margin_right = 5.0
+bg_color = Color(0.164706, 0.180392, 0.2, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="Theme" id="Theme_qoy37"]
+LineEdit/font_sizes/font_size = 30
+LineEdit/styles/normal = SubResource("StyleBoxFlat_svv0u")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_156pe"]
+bg_color = Color(0.594771, 0.650952, 0.379013, 1)
+border_width_bottom = 2
+border_color = Color(0.337255, 0.376471, 0.192157, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_naxbo"]
+bg_color = Color(0.429927, 0.474772, 0.251699, 1)
+border_width_top = 2
+border_color = Color(0.8, 0.8, 0.8, 0)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_qicf0"]
+bg_color = Color(0.5096, 0.56, 0.308, 1)
+border_width_bottom = 2
+border_color = Color(0.33907, 0.376117, 0.190465, 1)
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_n7e0p"]
+bg_color = Color(0.166, 0.179033, 0.2, 1)
+
+[sub_resource type="Theme" id="Theme_wxeym"]
+ItemList/styles/panel = SubResource("StyleBoxFlat_n7e0p")
+
+[node name="MainScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_mv1ex")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_g17bd")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label_Titel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "TASK LIST"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="HBoxContainer_TaskInputRow" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="LineEdit_TaskInput" type="LineEdit" parent="MarginContainer/VBoxContainer/HBoxContainer_TaskInputRow"]
+custom_minimum_size = Vector2(400, 0)
+layout_mode = 2
+tooltip_text = "Add a task to the To Do List"
+theme = SubResource("Theme_qoy37")
+placeholder_text = "Add task..."
+
+[node name="Button_AddTask" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_TaskInputRow"]
+custom_minimum_size = Vector2(50, 50)
+layout_mode = 2
+theme = ExtResource("2_o80d3")
+theme_override_font_sizes/font_size = 34
+text = "+"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer_TaskInputRow"]
+layout_mode = 2
+size_flags_horizontal = 10
+
+[node name="Button_Evaluate" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_TaskInputRow/HBoxContainer"]
+custom_minimum_size = Vector2(140, 50)
+layout_mode = 2
+size_flags_horizontal = 4
+theme = ExtResource("2_o80d3")
+theme_override_constants/h_separation = 8
+theme_override_styles/hover = SubResource("StyleBoxFlat_156pe")
+theme_override_styles/pressed = SubResource("StyleBoxFlat_naxbo")
+theme_override_styles/normal = SubResource("StyleBoxFlat_qicf0")
+text = "Evaluate"
+
+[node name="ItemList_TaskDisplayList" type="ItemList" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 400)
+layout_mode = 2
+theme = SubResource("Theme_wxeym")
+theme_override_font_sizes/font_size = 30
+select_mode = 1
+auto_height = true
+
+[node name="Label_TaskCount" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Tasks: 0"
+
+[node name="HBoxContainer_ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button_DeleteSelected" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ActionButtons"]
+custom_minimum_size = Vector2(250, 50)
+layout_mode = 2
+theme = ExtResource("2_o80d3")
+text = "Delete selection"
+
+[connection signal="text_submitted" from="MarginContainer/VBoxContainer/HBoxContainer_TaskInputRow/LineEdit_TaskInput" to="." method="on_task_input_submitted"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer_TaskInputRow/HBoxContainer/Button_Evaluate" to="." method="_on_Button_Evaluate_pressed"]

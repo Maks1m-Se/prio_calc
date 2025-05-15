@@ -1,0 +1,82 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmo7r8jjbaq2t"]
+
+[ext_resource type="Script" path="res://scenes/ResultsScene.gd" id="1_ufjdn"]
+[ext_resource type="Theme" uid="uid://cupetxda7klxw" path="res://prio_calc_btn_theme.tres" id="2_d1qxu"]
+
+[sub_resource type="Gradient" id="Gradient_myyln"]
+offsets = PackedFloat32Array(0, 0.51465, 1)
+colors = PackedColorArray(0.00401211, 0.105149, 0.250394, 1, 0.00784314, 0.156863, 0.34902, 1, 0.0143015, 0.216465, 0.462609, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_x6oh2"]
+gradient = SubResource("Gradient_myyln")
+fill_from = Vector2(0.655271, 0.917379)
+fill_to = Vector2(0.19943, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_7q20c"]
+texture = SubResource("GradientTexture2D_x6oh2")
+
+[node name="ResultsScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ufjdn")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_7q20c")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label_Title" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "RESULTS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Tree_Results" type="Tree" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(400, 300)
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+theme_override_font_sizes/title_button_font_size = 32
+columns = 3
+column_titles_visible = true
+hide_folding = true
+hide_root = true
+
+[node name="CheckBox_ShowDetails" type="CheckBox" parent="MarginContainer/VBoxContainer"]
+layout_direction = 3
+layout_mode = 2
+text = "Show Details"
+
+[node name="HBoxContainer_ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button_BackToMain" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ActionButtons"]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 2
+theme = ExtResource("2_d1qxu")
+text = "Back
+"

@@ -1,0 +1,419 @@
+[gd_scene load_steps=8 format=3 uid="uid://bjvw3kt4oper"]
+
+[ext_resource type="Script" path="res://scripts/TaskEvaluation.gd" id="1_kf56c"]
+[ext_resource type="Theme" uid="uid://cupetxda7klxw" path="res://prio_calc_btn_theme.tres" id="3_gimdc"]
+
+[sub_resource type="Gradient" id="Gradient_4266f"]
+offsets = PackedFloat32Array(0, 0.51465, 1)
+colors = PackedColorArray(0.00401211, 0.105149, 0.250394, 1, 0.00784314, 0.156863, 0.34902, 1, 0.0143015, 0.216465, 0.462609, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_d3t7f"]
+gradient = SubResource("Gradient_4266f")
+fill_from = Vector2(0.655271, 0.917379)
+fill_to = Vector2(0.19943, 0)
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_j0lp4"]
+texture = SubResource("GradientTexture2D_d3t7f")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hcd6l"]
+bg_color = Color(0.00392157, 0.101961, 0.247059, 1)
+border_width_left = 50
+border_width_top = 5
+border_width_right = 50
+border_width_bottom = 5
+border_color = Color(0.005, 0.103, 0.25, 0)
+border_blend = true
+corner_detail = 1
+expand_margin_left = 20.0
+expand_margin_right = 20.0
+
+[sub_resource type="Theme" id="Theme_wowvt"]
+
+[node name="TaskEvaluation" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_kf56c")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxTexture_j0lp4")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Label_Titel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 60
+text = "EVALUATION"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Label_CurrentTask_Titel" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 30
+text = "Task"
+horizontal_alignment = 1
+
+[node name="Label_CurrentTask" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_font_sizes/font_size = 40
+theme_override_styles/normal = SubResource("StyleBoxFlat_hcd6l")
+text = "Task"
+horizontal_alignment = 1
+
+[node name="BlankSpace" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label_Importance" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Importance
+"
+horizontal_alignment = 1
+
+[node name="HBoxContainer_ImportanceButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_wowvt")
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Button0_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "0"
+
+[node name="Button1_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "1"
+
+[node name="Button2_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "2"
+
+[node name="Button3_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "3"
+
+[node name="Button4_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "4"
+
+[node name="Button5_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "5"
+
+[node name="Button6_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "6"
+
+[node name="Button7_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "7"
+
+[node name="Button8_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "8"
+
+[node name="Button9_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "9"
+
+[node name="Button10_I" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ImportanceButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "10"
+
+[node name="BlankSpace2" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label_Urgency" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Urgency
+"
+horizontal_alignment = 1
+
+[node name="HBoxContainer_UrgencyButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_wowvt")
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Button0_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "0"
+
+[node name="Button1_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "1"
+
+[node name="Button2_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "2"
+
+[node name="Button3_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "3"
+
+[node name="Button4_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "4"
+
+[node name="Button5_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "5"
+
+[node name="Button6_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "6"
+
+[node name="Button7_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "7"
+
+[node name="Button8_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "8"
+
+[node name="Button9_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "9"
+
+[node name="Button10_U" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_UrgencyButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "10"
+
+[node name="BlankSpace3" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="Label_Effort" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "Effort"
+horizontal_alignment = 1
+
+[node name="HBoxContainer_EffortButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme = SubResource("Theme_wowvt")
+theme_override_constants/separation = 4
+alignment = 1
+
+[node name="Button0_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "0"
+
+[node name="Button1_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "1"
+
+[node name="Button2_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "2"
+
+[node name="Button3_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "3"
+
+[node name="Button4_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "4"
+
+[node name="Button5_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "5"
+
+[node name="Button6_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "6"
+
+[node name="Button7_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "7"
+
+[node name="Button8_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "8"
+
+[node name="Button9_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "9"
+
+[node name="Button10_E" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_EffortButtons"]
+custom_minimum_size = Vector2(60, 60)
+layout_mode = 2
+size_flags_horizontal = 3
+theme = SubResource("Theme_wowvt")
+theme_override_font_sizes/font_size = 20
+text = "10"
+
+[node name="BlankSpace4" type="PanelContainer" parent="MarginContainer/VBoxContainer"]
+modulate = Color(1, 1, 1, 0)
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="HBoxContainer_ActionButtons" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Button_Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer_ActionButtons"]
+custom_minimum_size = Vector2(80, 50)
+layout_mode = 2
+theme = ExtResource("3_gimdc")
+text = "Back
+"
