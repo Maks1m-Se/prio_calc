@@ -1,6 +1,8 @@
 extends Control
 
 func _ready():
+	$MarginContainer/VBoxContainer/HBoxContainer_TaskInputRow/LineEdit_TaskInput.virtual_keyboard_enabled = true
+	
 	var screen_size = DisplayServer.window_get_size()
 	if screen_size.x > screen_size.y:
 		print("Landscape")
