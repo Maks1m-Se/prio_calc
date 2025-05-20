@@ -24,6 +24,7 @@ SceneManager="*res://scripts/SceneManager.gd"
 window/size/viewport_width=800
 window/size/viewport_height=1280
 window/stretch/aspect="ignore"
+window/handheld/orientation=6
 
 [rendering]
 
